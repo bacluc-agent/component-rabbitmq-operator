@@ -3,13 +3,9 @@ kind: ClusterRole
 metadata:
   labels:
     app.kubernetes.io/component: rabbitmq-operator
-    app.kubernetes.io/instance: rabbitmq-operator
-    app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: rabbitmq-cluster-operator
     app.kubernetes.io/part-of: rabbitmq
-    app.kubernetes.io/version: 2.6.0
-    helm.sh/chart: rabbitmq-cluster-operator-3.10.10
-  name: rabbitmq-operator-rabbitmq-cluster-operator-syn-rabbitmq-operat
+  name: rabbitmq-cluster-operator-role
 rules:
   - apiGroups:
       - ''
@@ -145,4 +141,23 @@ rules:
       - get
       - list
       - update
+      - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/component: rabbitmq-operator
+    app.kubernetes.io/name: rabbitmq-cluster-operator
+    app.kubernetes.io/part-of: rabbitmq
+    servicebinding.io/controller: 'true'
+  name: rabbitmq-cluster-service-binding-role
+rules:
+  - apiGroups:
+      - rabbitmq.com
+    resources:
+      - rabbitmqclusters
+    verbs:
+      - get
+      - list
       - watch

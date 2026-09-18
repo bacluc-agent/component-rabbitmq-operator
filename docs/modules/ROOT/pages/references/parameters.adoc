@@ -10,129 +10,23 @@ default:: `syn-rabbitmq-operator`
 
 The namespace in which to deploy this component.
 
-== Charts Configuration
+== Manifest Configuration
 
-=== `charts.rabbitmq-cluster-operator.source`
-
-[horizontal]
-type:: string
-default:: `https://charts.bitnami.com/bitnami`
-
-The Helm chart repository URL for the RabbitMQ cluster operator.
-
-=== `charts.rabbitmq-cluster-operator.version`
+=== `manifest_version`
 
 [horizontal]
 type:: string
-default:: `3.10.5`
+default:: `2.6.0`
 
-The version of the RabbitMQ cluster operator Helm chart to deploy.
+The version of the RabbitMQ Cluster Operator manifests to deploy.
 
-== Operator Configuration
-
-=== `operator.helmValues.useCertManager`
-
-[horizontal]
-type:: boolean
-default:: `true`
-
-Whether to use cert-manager for certificate management.
-
-=== `operator.helmValues.clusterOperator.image.registry`
+=== `manifest_url`
 
 [horizontal]
 type:: string
-default:: `docker.io`
+default:: `https://github.com/rabbitmq/cluster-operator/releases/download`
 
-The container registry for the cluster operator image.
-
-=== `operator.helmValues.clusterOperator.image.repository`
-
-[horizontal]
-type:: string
-default:: `bitnamilegacy/rabbitmq-cluster-operator`
-
-The repository path for the cluster operator image.
-
-=== `operator.helmValues.clusterOperator.podSecurityContext.enabled`
-
-[horizontal]
-type:: boolean
-default:: `false`
-
-Whether to enable pod security context for the cluster operator.
-
-=== `operator.helmValues.clusterOperator.containerSecurityContext.enabled`
-
-[horizontal]
-type:: boolean
-default:: `false`
-
-Whether to enable container security context for the cluster operator.
-
-=== `operator.helmValues.msgTopologyOperator.image.registry`
-
-[horizontal]
-type:: string
-default:: `docker.io`
-
-The container registry for the messaging topology operator image.
-
-=== `operator.helmValues.msgTopologyOperator.image.repository`
-
-[horizontal]
-type:: string
-default:: `bitnamilegacy/rmq-messaging-topology-operator`
-
-The repository path for the messaging topology operator image.
-
-=== `operator.helmValues.msgTopologyOperator.podSecurityContext.enabled`
-
-[horizontal]
-type:: boolean
-default:: `false`
-
-Whether to enable pod security context for the messaging topology operator.
-
-=== `operator.helmValues.msgTopologyOperator.containerSecurityContext.enabled`
-
-[horizontal]
-type:: boolean
-default:: `false`
-
-Whether to enable container security context for the messaging topology operator.
-
-=== `operator.helmValues.rabbitmqImage.registry`
-
-[horizontal]
-type:: string
-default:: `docker.io`
-
-The container registry for the RabbitMQ image.
-
-=== `operator.helmValues.rabbitmqImage.repository`
-
-[horizontal]
-type:: string
-default:: `bitnamilegacy/rabbitmq`
-
-The repository path for the RabbitMQ image.
-
-=== `operator.helmValues.credentialUpdaterImage.registry`
-
-[horizontal]
-type:: string
-default:: `docker.io`
-
-The container registry for the credential updater image.
-
-=== `operator.helmValues.credentialUpdaterImage.repository`
-
-[horizontal]
-type:: string
-default:: `bitnamilegacy/rmq-default-credential-updater`
-
-The repository path for the credential updater image.
+The base URL for downloading the RabbitMQ Cluster Operator manifest.
 
 == RabbitMQ Cluster Configuration
 

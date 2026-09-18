@@ -3,39 +3,8 @@ parameters:
     =_metadata:
       multi_tenant: true
     namespace: syn-rabbitmq-operator
-    charts:
-      rabbitmq-cluster-operator:
-        source: https://charts.bitnami.com/bitnami
-        version: 3.10.10
-
-    operator:
-      helmValues:
-        useCertManager: true
-        clusterOperator:
-          image:
-            registry: docker.io
-            repository: bitnamilegacy/rabbitmq-cluster-operator
-          podSecurityContext:
-            enabled: false
-          containerSecurityContext:
-            enabled: false
-
-        msgTopologyOperator:
-          image:
-            registry: docker.io
-            repository: bitnamilegacy/rmq-messaging-topology-operator
-          podSecurityContext:
-            enabled: false
-          containerSecurityContext:
-            enabled: false
-
-        rabbitmqImage:
-          registry: docker.io
-          repository: bitnamilegacy/rabbitmq
-
-        credentialUpdaterImage:
-          registry: docker.io
-          repository: bitnamilegacy/rmq-default-credential-updater
+    manifest_version: '2.6.0'
+    manifest_url: https://github.com/rabbitmq/cluster-operator/releases/download
     rabbitmq:
       enabled: true
       name: rabbitmq
