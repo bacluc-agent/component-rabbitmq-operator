@@ -5,6 +5,8 @@ parameters:
     namespace: syn-rabbitmq-operator
     manifest_version: '2.6.0'
     manifest_url: https://github.com/rabbitmq/cluster-operator/releases/download
+    messaging_topology_manifest_version: '1.20.3'
+    messaging_topology_manifest_url: https://github.com/rabbitmq/messaging-topology-operator/releases/download
     rabbitmq:
       enabled: true
       name: rabbitmq

@@ -4,6 +4,9 @@ parameters:
       - type: https
         source: ${rabbitmq_operator:manifest_url}/v${rabbitmq_operator:manifest_version}/cluster-operator.yml
         output_path: dependencies/rabbitmq-cluster-operator/manifests/operator/${rabbitmq_operator:manifest_version}/cluster-operator.yml
+      - type: https
+        source: ${rabbitmq_operator:messaging_topology_manifest_url}/v${rabbitmq_operator:messaging_topology_manifest_version}/messaging-topology-operator.yaml
+        output_path: dependencies/rabbitmq-messaging-topology-operator/manifests/operator/${rabbitmq_operator:messaging_topology_manifest_version}/messaging-topology-operator.yaml
     compile:
       - input_paths:
           - ${_base_directory}/component/app.jsonnet

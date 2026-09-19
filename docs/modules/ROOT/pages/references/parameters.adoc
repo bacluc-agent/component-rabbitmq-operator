@@ -28,6 +28,22 @@ default:: `https://github.com/rabbitmq/cluster-operator/releases/download`
 
 The base URL for downloading the RabbitMQ Cluster Operator manifest.
 
+=== `messaging_topology_manifest_version`
+
+[horizontal]
+type:: string
+default:: `1.20.3`
+
+The version of the RabbitMQ Messaging Topology Operator manifests to deploy.
+
+=== `messaging_topology_manifest_url`
+
+[horizontal]
+type:: string
+default:: `https://github.com/rabbitmq/messaging-topology-operator/releases/download`
+
+The base URL for downloading the RabbitMQ Messaging Topology Operator manifest.
+
 == RabbitMQ Cluster Configuration
 
 === `rabbitmq.enabled`
