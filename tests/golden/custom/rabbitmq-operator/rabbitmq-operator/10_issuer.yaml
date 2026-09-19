@@ -1,0 +1,10 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  labels:
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: messaging-topology-operator
+  name: messaging-topology-selfsigned-issuer
+  namespace: syn-rabbitmq-operator
+spec:
+  selfSigned: {}

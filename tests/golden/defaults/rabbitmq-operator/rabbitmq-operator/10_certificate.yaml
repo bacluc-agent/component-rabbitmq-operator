@@ -1,0 +1,33 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  labels:
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: messaging-topology-operator
+  name: messaging-topology-metrics-certs
+  namespace: syn-rabbitmq-operator
+spec:
+  dnsNames:
+    - messaging-topology-controller-metrics-service.syn-rabbitmq-operator.svc
+    - messaging-topology-controller-metrics-service.syn-rabbitmq-operator.svc.cluster.local
+  issuerRef:
+    kind: Issuer
+    name: messaging-topology-selfsigned-issuer
+  secretName: metrics-server-cert
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  labels:
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: messaging-topology-operator
+  name: messaging-topology-serving-cert
+  namespace: syn-rabbitmq-operator
+spec:
+  dnsNames:
+    - messaging-topology-webhook-service.syn-rabbitmq-operator.svc
+    - messaging-topology-webhook-service.syn-rabbitmq-operator.svc.cluster.local
+  issuerRef:
+    kind: Issuer
+    name: messaging-topology-selfsigned-issuer
+  secretName: webhook-server-cert

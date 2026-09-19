@@ -14,3 +14,32 @@ subjects:
   - kind: ServiceAccount
     name: rabbitmq-cluster-operator
     namespace: syn-rabbitmq-operator
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: messaging-topology-operator
+  name: messaging-topology-manager-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: messaging-topology-manager-role
+subjects:
+  - kind: ServiceAccount
+    name: messaging-topology-operator
+    namespace: syn-rabbitmq-operator
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: messaging-topology-metrics-auth-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: messaging-topology-metrics-auth-role
+subjects:
+  - kind: ServiceAccount
+    name: messaging-topology-operator
+    namespace: syn-rabbitmq-operator
