@@ -8,7 +8,10 @@ parameters:
     rabbitmq:
       enabled: true
       name: custom-rabbitmq
+      namespace: custom-rabbitmq-cluster
       replicas: 3
+      ciliumNetworkPolicy:
+        enabled: true
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:

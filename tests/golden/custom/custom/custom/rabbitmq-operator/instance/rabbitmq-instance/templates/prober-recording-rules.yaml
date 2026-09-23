@@ -2,7 +2,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   name: rabbitmq-prober-recording-rules
-  namespace: rabbitmq
+  namespace: custom-rabbitmq-cluster
 spec:
   groups:
     - interval: 10s

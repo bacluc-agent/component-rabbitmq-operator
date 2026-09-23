@@ -1,0 +1,18 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: custom-rabbitmq-allow-from-world
+  namespace: custom-rabbitmq-cluster
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: custom-rabbitmq
+  ingress:
+    - fromEntities:
+        - world
+      toPorts:
+        - ports:
+            - port: '5671'
+              protocol: TCP
+            - port: '5672'
+              protocol: TCP

@@ -2,7 +2,7 @@ apiVersion: rabbitmq.com/v1beta1
 kind: RabbitmqCluster
 metadata:
   name: custom-rabbitmq
-  namespace: rabbitmq
+  namespace: custom-rabbitmq-cluster
 spec:
   image: docker.io/bitnamilegacy/rabbitmq:3.11.26-debian-11-r0
   override:
