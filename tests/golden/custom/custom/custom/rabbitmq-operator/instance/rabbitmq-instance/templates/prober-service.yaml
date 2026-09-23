@@ -4,7 +4,7 @@ metadata:
   labels:
     app: rabbitmq-prober
   name: rabbitmq-prober-service
-  namespace: rabbitmq
+  namespace: custom-rabbitmq-cluster
 spec:
   ports:
     - name: metrics

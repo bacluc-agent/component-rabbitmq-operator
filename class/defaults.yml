@@ -28,6 +28,7 @@ parameters:
         useCertManager: true
     instance:
       helmValues:
+        namespace: ${rabbitmq_operator:rabbitmq:namespace}
         rabbitmq: ${rabbitmq_operator:rabbitmq}
         prober: ${rabbitmq_operator:prober}
     test:
@@ -38,6 +39,8 @@ parameters:
       name: rabbitmq
       namespace: rabbitmq
       replicas: 3
+      ciliumNetworkPolicy:
+        enabled: false
     prober:
       enabled: true
       probeInterval: '10'

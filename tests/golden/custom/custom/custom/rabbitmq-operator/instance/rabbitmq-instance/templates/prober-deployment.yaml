@@ -4,7 +4,7 @@ metadata:
   labels:
     app: rabbitmq-prober
   name: rabbitmq-prober
-  namespace: rabbitmq
+  namespace: custom-rabbitmq-cluster
 spec:
   minReadySeconds: 30
   replicas: 1

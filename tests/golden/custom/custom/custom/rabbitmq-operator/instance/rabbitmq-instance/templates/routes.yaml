@@ -2,7 +2,7 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: amqps
-  namespace: rabbitmq
+  namespace: custom-rabbitmq-cluster
 spec:
   host: amqps.rabbitmq.com
   port:
@@ -17,7 +17,7 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: management
-  namespace: rabbitmq
+  namespace: custom-rabbitmq-cluster
 spec:
   host: management.rabbitmq.com
   port:
