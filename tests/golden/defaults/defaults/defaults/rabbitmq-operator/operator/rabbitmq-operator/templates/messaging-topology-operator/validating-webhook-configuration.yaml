@@ -3,7 +3,7 @@ kind: ValidatingWebhookConfiguration
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: my-rabbitmq/serving-cert
-  name: topology.rabbitmq.com
+  name: defaults-topology.rabbitmq.com
 webhooks:
   - admissionReviewVersions:
       - v1
