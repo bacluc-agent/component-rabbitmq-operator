@@ -189,6 +189,15 @@ The repository path for the credential updater image.
 
 == Instance Chart Configuration
 
+=== `instance.helmValues.namespace`
+
+[horizontal]
+type:: string
+default:: `rabbitmq_operator.rabbitmq.namespace`
+
+The namespace in which to deploy the RabbitMQ cluster and prober, passed through to the instance chart's top-level `namespace` value.
+Sourced from `rabbitmq.namespace` (default `rabbitmq`).
+
 === `instance.helmValues.rabbitmq`
 
 [horizontal]
