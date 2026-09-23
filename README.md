@@ -5,6 +5,15 @@ This is a [Commodore][commodore] Component for rabbitmq-operator.
 This repository is part of Project Syn.
 For documentation on Project Syn and this component, see [syn.tools](https://syn.tools).
 
+The component deploys four Helm charts published to GHCR as OCI artifacts:
+
+- `rabbitmq-crd` — the RabbitMQ CRDs
+- `rabbitmq-operator` — the RabbitMQ cluster and messaging topology operators
+- `rabbitmq-instance` — the RabbitMQ cluster instance and prober
+- `test-helm-chart` — a values dump chart for testing
+
+The chart versions are pinned in `class/defaults.yml` under `rabbitmq_operator.charts`.
+
 ## Documentation
 
 The rendered documentation for this component is available on the [Commodore Components Hub](https://hub.syn.tools/rabbitmq-operator).

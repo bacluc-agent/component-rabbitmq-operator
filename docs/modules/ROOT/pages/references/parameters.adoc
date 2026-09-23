@@ -6,29 +6,114 @@ The parent key for all of the following parameters is `rabbitmq_operator`.
 
 [horizontal]
 type:: string
-default:: `syn-rabbitmq-operator`
+default:: `${_instance}`
 
 The namespace in which to deploy this component.
 
+== `createNamespace`
+
+[horizontal]
+type:: boolean
+default:: `true`
+
+Whether to create the namespace defined by `namespace`.
+
+== `namespaceLabels`
+
+[horizontal]
+type:: object
+default:: `{}`
+
+Additional labels to apply to the namespace defined by `namespace`.
+
+== `namespaceAnnotations`
+
+[horizontal]
+type:: object
+default:: `{}`
+
+Additional annotations to apply to the namespace defined by `namespace`.
+
 == Charts Configuration
 
-=== `charts.rabbitmq-cluster-operator.source`
+The component deploys four Helm charts from GHCR OCI registries.
+Each chart is referenced by its OCI source and version.
+
+=== `charts.rabbitmq-crd.source`
 
 [horizontal]
 type:: string
-default:: `https://charts.bitnami.com/bitnami`
+default:: `oci://ghcr.io/bacluc-agent/rabbitmq-crd-chart/rabbitmq-crd`
 
-The Helm chart repository URL for the RabbitMQ cluster operator.
+The OCI source of the RabbitMQ CRD chart.
 
-=== `charts.rabbitmq-cluster-operator.version`
+=== `charts.rabbitmq-crd.version`
 
 [horizontal]
 type:: string
-default:: `3.10.5`
+default:: `0.0.1`
 
-The version of the RabbitMQ cluster operator Helm chart to deploy.
+The version of the RabbitMQ CRD chart to deploy.
 
-== Operator Configuration
+=== `charts.rabbitmq-operator.source`
+
+[horizontal]
+type:: string
+default:: `oci://ghcr.io/bacluc-agent/rabbitmq-operator-chart/rabbitmq-operator`
+
+The OCI source of the RabbitMQ operator chart.
+
+=== `charts.rabbitmq-operator.version`
+
+[horizontal]
+type:: string
+default:: `0.0.1`
+
+The version of the RabbitMQ operator chart to deploy.
+
+=== `charts.rabbitmq-instance.source`
+
+[horizontal]
+type:: string
+default:: `oci://ghcr.io/bacluc-agent/rabbitmq-instance-chart/rabbitmq-instance`
+
+The OCI source of the RabbitMQ instance chart.
+
+=== `charts.rabbitmq-instance.version`
+
+[horizontal]
+type:: string
+default:: `0.0.1`
+
+The version of the RabbitMQ instance chart to deploy.
+
+=== `charts.test-helm-chart.source`
+
+[horizontal]
+type:: string
+default:: `oci://ghcr.io/bacluc-agent/test-helm-chart/test-helm-chart`
+
+The OCI source of the test chart.
+
+=== `charts.test-helm-chart.version`
+
+[horizontal]
+type:: string
+default:: `0.0.1`
+
+The version of the test chart to deploy.
+
+== CRD Chart Configuration
+
+=== `crd.helmValues`
+
+[horizontal]
+type:: object
+default:: `{}`
+
+Helm values passed to the RabbitMQ CRD chart.
+
+== Operator Chart Configuration
 
 === `operator.helmValues.useCertManager`
 
@@ -42,7 +127,7 @@ Whether to use cert-manager for certificate management.
 
 [horizontal]
 type:: string
-default:: `docker.io`
+default:: `ghcr.io`
 
 The container registry for the cluster operator image.
 
@@ -50,25 +135,9 @@ The container registry for the cluster operator image.
 
 [horizontal]
 type:: string
-default:: `bitnamilegacy/rabbitmq-cluster-operator`
+default:: `rabbitmq/cluster-operator`
 
 The repository path for the cluster operator image.
-
-=== `operator.helmValues.clusterOperator.podSecurityContext.enabled`
-
-[horizontal]
-type:: boolean
-default:: `false`
-
-Whether to enable pod security context for the cluster operator.
-
-=== `operator.helmValues.clusterOperator.containerSecurityContext.enabled`
-
-[horizontal]
-type:: boolean
-default:: `false`
-
-Whether to enable container security context for the cluster operator.
 
 === `operator.helmValues.msgTopologyOperator.image.registry`
 
@@ -85,22 +154,6 @@ type:: string
 default:: `bitnamilegacy/rmq-messaging-topology-operator`
 
 The repository path for the messaging topology operator image.
-
-=== `operator.helmValues.msgTopologyOperator.podSecurityContext.enabled`
-
-[horizontal]
-type:: boolean
-default:: `false`
-
-Whether to enable pod security context for the messaging topology operator.
-
-=== `operator.helmValues.msgTopologyOperator.containerSecurityContext.enabled`
-
-[horizontal]
-type:: boolean
-default:: `false`
-
-Whether to enable container security context for the messaging topology operator.
 
 === `operator.helmValues.rabbitmqImage.registry`
 
@@ -133,6 +186,36 @@ type:: string
 default:: `bitnamilegacy/rmq-default-credential-updater`
 
 The repository path for the credential updater image.
+
+== Instance Chart Configuration
+
+=== `instance.helmValues.rabbitmq`
+
+[horizontal]
+type:: object
+default:: `rabbitmq_operator.rabbitmq`
+
+The RabbitMQ cluster configuration, passed through to the instance chart.
+See <<RabbitMQ Cluster Configuration>> for the supported parameters.
+
+=== `instance.helmValues.prober`
+
+[horizontal]
+type:: object
+default:: `rabbitmq_operator.prober`
+
+The prober configuration, passed through to the instance chart.
+See <<Prober Configuration>> for the supported parameters.
+
+== Test Chart Configuration
+
+=== `test.helmValues`
+
+[horizontal]
+type:: object
+default:: `{foo: bar}`
+
+Helm values passed to the test chart.
 
 == RabbitMQ Cluster Configuration
 
@@ -250,7 +333,7 @@ The CPU request for RabbitMQ containers.
 
 [horizontal]
 type:: integer
-default:: `1`
+default:: `3`
 
 The number of RabbitMQ replicas to deploy.
 
@@ -310,6 +393,16 @@ default:: `[]`
 
 An array of group names to grant access to RabbitMQ resources.
 
+=== `rabbitmq.rbac.group`
+
+[horizontal]
+type:: string
+default:: `""`
+
+A single group name to grant access to RabbitMQ resources.
+This is a deprecated legacy option; prefer `rabbitmq.rbac.groups`.
+If the same group is listed in both, it is only granted once.
+
 === `rabbitmq.service`
 
 [horizontal]
@@ -321,13 +414,16 @@ The value of this parameter is used as-is for `spec.service` of the resulting re
 
 IMPORTANT: The only fields supported by the operator are `type` and `annotations`.
 
-[TIP]
-====
-When the Cilium Commodore component is present on the cluster, the component unconditionally deploys a `CiliumNetworkPolicy` which allows traffic on `5671/tcp` and `5672/tcp` from outside the cluster (Cilium entity `world`).
+=== `rabbitmq.ciliumNetworkPolicy.enabled`
+
+[horizontal]
+type:: boolean
+default:: `false`
+
+Whether to deploy a `CiliumNetworkPolicy` which allows traffic on `5671/tcp` and `5672/tcp` from outside the cluster (Cilium entity `world`).
 This policy ensures that accessing the RabbitMQ cluster over an LB service works correctly on Cilium-enabled clusters.
 
 Network policies to allow access from within the cluster must be managed separately.
-====
 
 === `rabbitmq.custom_lb_service.enabled`
 
@@ -357,7 +453,7 @@ The value is used as `spec.loadBalancerClass` for the LB service without any val
 
 [horizontal]
 type:: boolean
-default:: `false`
+default:: `true`
 
 Whether to deploy the RabbitMQ health prober for SLA monitoring.
 
@@ -368,14 +464,6 @@ type:: string
 default:: `rabbitmq-prober`
 
 The name of the prober deployment.
-
-=== `prober.namespace`
-
-[horizontal]
-type:: string
-default:: `rabbitmq`
-
-The namespace in which to deploy the prober.
 
 === `prober.image`
 

@@ -3,6 +3,7 @@ on:
   pull_request:
     branches:
       - master
+  workflow_dispatch: {}
 
 env:
   COMPONENT_NAME: rabbitmq-operator
@@ -33,6 +34,7 @@ jobs:
       matrix:
         instance:
           - defaults
+          - custom
     defaults:
       run:
         working-directory: ${{ env.COMPONENT_NAME }}
@@ -48,6 +50,7 @@ jobs:
       matrix:
         instance:
           - defaults
+          - custom
     defaults:
       run:
         working-directory: ${{ env.COMPONENT_NAME }}
