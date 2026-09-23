@@ -36,8 +36,9 @@ Additional annotations to apply to the namespace defined by `namespace`.
 
 == Charts Configuration
 
-The component deploys four Helm charts from GHCR OCI registries.
+The component deploys three Helm charts from GHCR OCI registries.
 Each chart is referenced by its OCI source and version.
+The component tests additionally compile the `test-helm-chart` values dump chart, which is never deployed to production clusters.
 
 === `charts.rabbitmq-crd.source`
 
@@ -86,22 +87,6 @@ type:: string
 default:: `0.0.1`
 
 The version of the RabbitMQ instance chart to deploy.
-
-=== `charts.test-helm-chart.source`
-
-[horizontal]
-type:: string
-default:: `oci://ghcr.io/bacluc-agent/test-helm-chart/test-helm-chart`
-
-The OCI source of the test chart.
-
-=== `charts.test-helm-chart.version`
-
-[horizontal]
-type:: string
-default:: `0.0.1`
-
-The version of the test chart to deploy.
 
 == CRD Chart Configuration
 
@@ -224,7 +209,8 @@ See <<Prober Configuration>> for the supported parameters.
 type:: object
 default:: `{foo: bar}`
 
-Helm values passed to the test chart.
+Helm values passed to the `test-helm-chart` values dump.
+The test chart is compiled only when running the component tests; it is not part of production deployments.
 
 == RabbitMQ Cluster Configuration
 
@@ -342,7 +328,7 @@ The CPU request for RabbitMQ containers.
 
 [horizontal]
 type:: integer
-default:: `3`
+default:: `1`
 
 The number of RabbitMQ replicas to deploy.
 
@@ -462,7 +448,7 @@ The value is used as `spec.loadBalancerClass` for the LB service without any val
 
 [horizontal]
 type:: boolean
-default:: `true`
+default:: `false`
 
 Whether to deploy the RabbitMQ health prober for SLA monitoring.
 

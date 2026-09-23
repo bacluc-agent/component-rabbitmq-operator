@@ -16,11 +16,6 @@ parameters:
         chart_name: rabbitmq-instance
         version: ${rabbitmq_operator:charts:rabbitmq-instance:version}
         output_path: ${_base_directory}/helmcharts/rabbitmq-instance-${rabbitmq_operator:charts:rabbitmq-instance:version}
-      - type: helm
-        source: ${rabbitmq_operator:charts:test-helm-chart:source}
-        chart_name: test-helm-chart
-        version: ${rabbitmq_operator:charts:test-helm-chart:version}
-        output_path: ${_base_directory}/helmcharts/test-helm-chart-${rabbitmq_operator:charts:test-helm-chart:version}
     compile:
       - input_paths:
           - ${_base_directory}/component/app.jsonnet
@@ -51,14 +46,6 @@ parameters:
         input_type: helm
         output_path: ${_instance}/rabbitmq-operator/instance
         helm_values: ${rabbitmq_operator:instance:helmValues}
-        helm_params:
-          name: ${_instance}
-          namespace: ${rabbitmq_operator:namespace}
-      - input_paths:
-          - ${_base_directory}/helmcharts/test-helm-chart-${rabbitmq_operator:charts:test-helm-chart:version}
-        input_type: helm
-        output_path: ${_instance}/rabbitmq-operator/test
-        helm_values: ${rabbitmq_operator:test:helmValues}
         helm_params:
           name: ${_instance}
           namespace: ${rabbitmq_operator:namespace}

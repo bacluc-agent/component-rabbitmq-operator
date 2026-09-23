@@ -1,6 +1,20 @@
-applications:
-  - cilium
 parameters:
+  kapitan:
+    dependencies:
+      - type: helm
+        source: oci://ghcr.io/bacluc-agent/test-helm-chart/test-helm-chart
+        chart_name: test-helm-chart
+        version: 0.0.1
+        output_path: ${_base_directory}/helmcharts/test-helm-chart-0.0.1
+    compile:
+      - input_paths:
+          - ${_base_directory}/helmcharts/test-helm-chart-0.0.1
+        input_type: helm
+        output_path: ${_instance}/rabbitmq-operator/test
+        helm_values: ${rabbitmq_operator:test:helmValues}
+        helm_params:
+          name: ${_instance}
+          namespace: ${rabbitmq_operator:namespace}
   rabbitmq_operator:
     namespace: custom-rabbitmq
     namespaceLabels:

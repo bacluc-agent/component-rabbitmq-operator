@@ -18,9 +18,6 @@ parameters:
       rabbitmq-instance:
         source: oci://ghcr.io/bacluc-agent/rabbitmq-instance-chart/rabbitmq-instance
         version: 0.0.1
-      test-helm-chart:
-        source: oci://ghcr.io/bacluc-agent/test-helm-chart/test-helm-chart
-        version: 0.0.1
     crd:
       helmValues: {}
     operator:
@@ -38,9 +35,9 @@ parameters:
       enabled: true
       name: rabbitmq
       namespace: rabbitmq
-      replicas: 3
+      replicas: 1
       ciliumNetworkPolicy:
         enabled: false
     prober:
-      enabled: true
+      enabled: false
       probeInterval: '10'
