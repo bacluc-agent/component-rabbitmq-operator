@@ -18,7 +18,7 @@ spec:
     additionalConfig: |
       vm_memory_high_watermark.absolute = 3Gi
     additionalPlugins: []
-  replicas: 3
+  replicas: 1
   resources:
     limits:
       cpu: '1'
