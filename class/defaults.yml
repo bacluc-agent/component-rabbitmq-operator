@@ -2,92 +2,42 @@ parameters:
   rabbitmq_operator:
     =_metadata:
       multi_tenant: true
-    namespace: syn-rabbitmq-operator
+      multi_instance: true
+      multi_version: true
+    namespace: ${_instance}
+    createNamespace: true
+    namespaceLabels: {}
+    namespaceAnnotations: {}
     charts:
-      rabbitmq-cluster-operator:
-        source: https://charts.bitnami.com/bitnami
-        version: 3.10.10
-
+      rabbitmq-crd:
+        source: oci://ghcr.io/bacluc-agent/rabbitmq-crd-chart/rabbitmq-crd
+        version: 0.0.1
+      rabbitmq-operator:
+        source: oci://ghcr.io/bacluc-agent/rabbitmq-operator-chart/rabbitmq-operator
+        version: 0.0.1
+      rabbitmq-instance:
+        source: oci://ghcr.io/bacluc-agent/rabbitmq-instance-chart/rabbitmq-instance
+        version: 0.0.1
+      test-helm-chart:
+        source: oci://ghcr.io/bacluc-agent/test-helm-chart/test-helm-chart
+        version: 0.0.1
+    crd:
+      helmValues: {}
     operator:
       helmValues:
         useCertManager: true
-        clusterOperator:
-          image:
-            registry: docker.io
-            repository: bitnamilegacy/rabbitmq-cluster-operator
-          podSecurityContext:
-            enabled: false
-          containerSecurityContext:
-            enabled: false
-
-        msgTopologyOperator:
-          image:
-            registry: docker.io
-            repository: bitnamilegacy/rmq-messaging-topology-operator
-          podSecurityContext:
-            enabled: false
-          containerSecurityContext:
-            enabled: false
-
-        rabbitmqImage:
-          registry: docker.io
-          repository: bitnamilegacy/rabbitmq
-
-        credentialUpdaterImage:
-          registry: docker.io
-          repository: bitnamilegacy/rmq-default-credential-updater
+    instance:
+      helmValues:
+        rabbitmq: ${rabbitmq_operator:rabbitmq}
+        prober: ${rabbitmq_operator:prober}
+    test:
+      helmValues:
+        foo: bar
     rabbitmq:
       enabled: true
       name: rabbitmq
       namespace: rabbitmq
-      namespaceLabels: {}
-      image: docker.io/bitnamilegacy/rabbitmq:3.11.26-debian-11-r0
-      affinity: {}
-      plugins: []
-      additionalConfig: ''
-      persistence:
-        storage: 3Gi
-      resources:
-        limits:
-          memory: 3Gi
-          cpu: '1'
-        requests:
-          memory: 3Gi
-          cpu: '1'
-      replicas: 1
-      tls:
-        enabled: false
-        secretName: rabbitmq-certs
-        disableNonTLSListeners: true
-        dnsNames:
-          amqps: amqps.rabbitmq.com
-          management: management.rabbitmq.com
-      rbac:
-        enabled: false
-        groups: []
-      service: {}
-      custom_lb_service:
-        enabled: false
-        loadBalancerClass: ""
-
+      replicas: 3
     prober:
-      enabled: false
-      name: rabbitmq-prober
-      namespace: rabbitmq
-      image: ghcr.io/projectsyn/component-rabbitmq-operator/prober:latest
-      secretName: rabbitmq-default-user
+      enabled: true
       probeInterval: '10'
-      metricsPort: 8080
-      useTLS: 'true'
-      alerts:
-        enabled: false
-      resources:
-        requests:
-          memory: '64Mi'
-          cpu: '50m'
-        limits:
-          memory: '128Mi'
-          cpu: '100m'
-      monitoring:
-        interval: '10s'
-        recordingRulesInterval: '10s'

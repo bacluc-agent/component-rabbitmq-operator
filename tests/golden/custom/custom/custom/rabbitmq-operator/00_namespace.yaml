@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations: {}
+  labels:
+    custom.net: 'true'
+    name: custom-rabbitmq
+  name: custom-rabbitmq

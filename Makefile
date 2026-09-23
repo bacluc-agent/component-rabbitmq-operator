@@ -6,6 +6,7 @@ SHELL := bash
 .SUFFIXES:
 
 include Makefile.vars.mk
+include Makefile.custom.mk
 
 # Image configuration
 REGISTRY := ghcr.io

@@ -1,3 +1,7 @@
-# Overwrite parameters here
-
-# parameters: {...}
+parameters:
+  rabbitmq_operator:
+    namespace: my-rabbitmq
+    namespaceLabels:
+      test.net: 'true'
+    namespaceAnnotations:
+      example.com/note: test

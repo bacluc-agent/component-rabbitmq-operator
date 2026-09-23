@@ -1,0 +1,29 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: amqps
+  namespace: rabbitmq
+spec:
+  host: amqps.rabbitmq.com
+  port:
+    targetPort: amqps
+  tls:
+    termination: passthrough
+  to:
+    kind: Service
+    name: custom-rabbitmq
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: management
+  namespace: rabbitmq
+spec:
+  host: management.rabbitmq.com
+  port:
+    targetPort: management-tls
+  tls:
+    termination: passthrough
+  to:
+    kind: Service
+    name: custom-rabbitmq
